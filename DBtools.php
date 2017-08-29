@@ -83,5 +83,9 @@ class DBtools
         }
     }
 
+    public function getUsername($userid)
+    {
+
+    }
 
 }

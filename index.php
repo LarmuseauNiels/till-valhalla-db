@@ -10,7 +10,7 @@ $userid = $authenticator->getUserid();
 $provider = new \Discord\OAuth\Discord([
     'clientId'     => '352090158444838914',
     'clientSecret' => 'UyEUf7Ny2nC7D4Qcpl_6hxf8Fry7vKQq',
-    'redirectUri'  => 'http://localhost/till-valhalla-db/',
+    'redirectUri'  => 'http://tillvalhalla.tl-clan.com/',
 ]);
 
 if(!isset($userid))
@@ -32,9 +32,14 @@ if(!isset($userid))
 }
 else
 {
-    echo "<h1>You have logged in</h1>";
+    echo "<h1>You are logged in</h1>";
     //authenticated
     //header("Location: members.php");
+    $DBtools = DBtools::getdbinstance();
+    $user = $DBtools->getUserFromID($userid);
+    echo "<p>Your username is $user->username</p>";
+    echo "<p>Your discriminator is $user->discriminator</p>";
+    echo "<p>Your lastlogin was $user->lastlogin</p>";
 }
 
 require_once 'HTMLtail.php';

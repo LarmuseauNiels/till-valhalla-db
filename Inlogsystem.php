@@ -30,7 +30,7 @@ class Inlogsystem
         }
         else
         {
-            $this->adduser($user);
+            $DBtools->addUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
             $_SESSION["userid"] = $this->userid;
         }
     }
