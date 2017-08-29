@@ -69,7 +69,7 @@ class Discord extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['identify', 'email', 'guilds']; // Allows you to retrieve connected YouTube and Twitch accounts
+        return ['identify', 'guilds']; // Allows you to retrieve connected YouTube and Twitch accounts
 
     }
 

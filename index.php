@@ -13,48 +13,28 @@ $provider = new \Discord\OAuth\Discord([
     'redirectUri'  => 'http://localhost/till-valhalla-db/',
 ]);
 
-
-if (! isset($_GET['code'])) {
-    echo '<a href="'.$provider->getAuthorizationUrl().'">Login with Discord</a>';
-} else {
-
-
-    $token = $provider->getAccessToken('authorization_code', [
-        'code' => $_GET['code'],
-    ]);
-
-    // Get the user object.
-    $user = $provider->getResourceOwner($token);
-
-    // Get the guilds and connections.
-    $guilds = $user->guilds;
-    $connections = $user->connections;
-
-    // Accept an invite
-    $invite = $user->acceptInvite('https://discord.gg/0SBTUU1wZTUo9F8v');
-
-
-    // Store the new token.
-    var_dump($user);
-    var_dump($guilds);
-}
-
-
-
-/*
 if(!isset($userid))
 {
-    //not authenticated
-    Output::showtitle("Log in with discord");
-    Output::showdiscordauthentication();
-
-    $actie = isset($_GET["actie"])? $_GET["actie"] : "";
-
+    if (! isset($_GET['code'])) {
+        echo '<a href="'.$provider->getAuthorizationUrl().'">Login with Discord</a>';
+    } else {
+        $token = $provider->getAccessToken('authorization_code', [
+            'code' => $_GET['code'],
+        ]);
+        // Get the user object.
+        $user = $provider->getResourceOwner($token);
+        // Get the guilds and connections.
+        $guilds = $user->guilds;
+        //
+        $authenticator->login($user);
+        header("Location: index.php");
+    }
 }
 else
 {
+    echo "<h1>You have logged in</h1>";
     //authenticated
-    header("Location: members.php");
+    //header("Location: members.php");
 }
-*/
+
 require_once 'HTMLtail.php';

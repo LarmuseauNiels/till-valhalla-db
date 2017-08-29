@@ -20,4 +20,25 @@ class Inlogsystem
         $this->userid = null;
     }
 
+    public function login($user)
+    {
+        $DBtools = DBtools::getdbinstance();
+        $this->userid = $user->id;
+        if ($DBtools->doesUserExist($this->userid))
+        {
+            $_SESSION["userid"] = $this->userid;
+        }
+        else
+        {
+            $this->adduser($user);
+            $_SESSION["userid"] = $this->userid;
+        }
+    }
+
+    public function adduser($user)
+    {
+        $DBtools = DBtools::getdbinstance();
+        $DBtools->addUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
+    }
+
 }
