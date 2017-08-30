@@ -96,12 +96,8 @@ textarea {
    ========================================================================== */
 
 body{
-    background: url(../assets/Best-BG.png) no-repeat center center fixed;
-    color: white;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: black url(../assets/Best-BG.png) no-repeat fixed top center;
+
 }
 nav{
     background-image: url(../assets/MenuBG2.png);
