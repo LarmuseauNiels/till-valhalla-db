@@ -25,7 +25,6 @@ if(!isset($userid))
         $user = $provider->getResourceOwner($token);
         // Get the guilds and connections.
         $guilds = $user->guilds;
-        //
         $authenticator->login($user);
         header("Location: index.php");
     }

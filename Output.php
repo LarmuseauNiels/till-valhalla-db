@@ -26,12 +26,13 @@ class Output
         <?php
     }
 
-    public static function showform()
+    public static function createCharacter()
     {
         ?>
         <form action="">
-            <input type="text" id="characktername" >
-            <label for=""></label>
+            <input type="text" id="charactername" name="" >
+            <label for="charactername">charactername</label>
+            <input type="submit">
         </form>
         <?php
     }

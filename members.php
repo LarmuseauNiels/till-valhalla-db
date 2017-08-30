@@ -33,8 +33,6 @@ if(isset($userid))
         break;
     }
 
-
-
     $dbtools->closeDB();
 }
 else
