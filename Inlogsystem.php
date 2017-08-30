@@ -26,6 +26,7 @@ class Inlogsystem
         $this->userid = $user->id;
         if ($DBtools->doesUserExist($this->userid))
         {
+            $DBtools->updateUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
             $_SESSION["userid"] = $this->userid;
         }
         else
@@ -33,12 +34,6 @@ class Inlogsystem
             $DBtools->addUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
             $_SESSION["userid"] = $this->userid;
         }
-    }
-
-    public function adduser($user)
-    {
-        $DBtools = DBtools::getdbinstance();
-        $DBtools->addUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
     }
 
 }

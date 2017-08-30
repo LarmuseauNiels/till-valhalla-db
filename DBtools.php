@@ -83,9 +83,29 @@ class DBtools
         }
     }
 
-    public function getUsername($userid)
+    public function updateUser($userid,$username,$discriminator,$lastlogin)
     {
-
+        try
+        {
+            $sql = "UPDATE members
+							SET username = :username,
+								discriminator = :discriminator,
+								lastlogin = :lastlogin
+							WHERE userid = :userid   ";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":username", $username);
+            $stmt->bindParam(":discriminator", $discriminator);
+            $stmt->bindParam(":lastlogin", $lastlogin);
+            $stmt->bindParam(":userid", $userid);
+            $stmt->execute();
+        }
+        catch (PDOException $e)
+		{
+            die($e->getMessage());
+        }
     }
+
+
+
 
 }
