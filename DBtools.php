@@ -142,16 +142,16 @@ class DBtools
             switch ($tabel)
             {
                 case "crafting": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
-						VALUES(:characterid, :craftingbranch,:tier)";
+						VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "farming": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
-						VALUES(:characterid, :craftingbranch,:tier)";
+                case "farming": $sql = "INSERT INTO farming(characterid,farmbranch,tier)
+						VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "refining": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
-						VALUES(:characterid, :craftingbranch,:tier)";
+                case "refining": $sql = "INSERT INTO refining(characterid,resource,tier)
+						VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "gathering": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
-						VALUES(:characterid, :craftingbranch,:tier)";
+                case "gathering": $sql = "INSERT INTO gathering(characterid,profession,tier)
+						VALUES(:characterid, :categoriser,:tier)";
                     break;
                 default: die("Invalid table name");
             }

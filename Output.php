@@ -12,16 +12,31 @@ class Output
         echo "<h3>$title</h3>";
     }
 
-
-    public static function showdiscordauthentication()
+    public static function navigationbar()
     {
         ?>
-        <ul>
-            <li><a href="">log in with discord</a></li>
-        </ul>
-        <hr />
+        <nav>
+            <ul>
+                <li><a href="?actie=home">home</a></li>
+                <li><a href="?actie=charsearch">person search</a></li>
+                <li><a href="?actie=charedit">character editor</a></li>
+                <li><a href="?actie=logout">log out</a></li>
+            </ul>
+        </nav>
         <?php
     }
+
+    public static function showform()
+    {
+        ?>
+        <form action="">
+            <input type="text" id="characktername" >
+            <label for=""></label>
+        </form>
+        <?php
+    }
+
+
 
 }
 
