@@ -105,7 +105,122 @@ class DBtools
         }
     }
 
+    public function getTabel($tabel)
+    {
+        try
+        {
+            switch ($tabel)
+            {
+                case "crafting": $sql = "SELECT * FROM crafting";
+                    break;
+                case "farming": $sql = "SELECT * FROM farming";
+                    break;
+                case "refining": $sql = "SELECT * FROM refining";
+                    break;
+                case "gathering": $sql = "SELECT * FROM gathering";
+                    break;
 
+                default: die("Invalled tabelname");
+            }
 
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function addToTabel($tabel,$characterid,$categoriser ,$tier)
+    {
+        try
+        {
+            switch ($tabel)
+            {
+                case "crafting": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
+						VALUES(:characterid, :craftingbranch,:tier)";
+                    break;
+                case "farming": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
+						VALUES(:characterid, :craftingbranch,:tier)";
+                    break;
+                case "refining": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
+						VALUES(:characterid, :craftingbranch,:tier)";
+                    break;
+                case "gathering": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
+						VALUES(:characterid, :craftingbranch,:tier)";
+                    break;
+                default: die("Invalid table name");
+            }
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":characterid", $characterid);
+            $stmt->bindParam(":categoriser", $categoriser);
+            $stmt->bindParam(":tier", $tier);
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->execute();
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+    }
+
+    public function createCharacter($userid ,$charactername)
+    {
+        try
+        {
+            $sql = "INSERT INTO character (userid,charactername)
+						VALUES(:userid, :charactername)";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":userid", $userid);
+            $stmt->bindParam(":charactername", $charactername);
+            $stmt->execute();
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+    }
+
+    public function getUserCharacters($userid)
+    {
+        try
+        {
+            $sql = "SELECT * FROM character
+					WHERE userid = :userid";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":userid", $userid);
+            $stmt->execute();
+            $characters = $stmt->fetch(PDO::FETCH_OBJ);
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+
+        return $characters;
+    }
+
+    public function getUserFromCharacters($characterid)
+    {
+        try
+        {
+            $sql = "SELECT * FROM character
+					WHERE characterid = :characterid";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":characterid", $characterid);
+            $stmt->execute();
+            $characters = $stmt->fetch(PDO::FETCH_OBJ);
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+        return $characters;
+    }
 
 }
+
