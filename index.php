@@ -16,7 +16,8 @@ $provider = new \Discord\OAuth\Discord([
 if(!isset($userid))
 {
     if (! isset($_GET['code'])) {
-        echo '<a href="'.$provider->getAuthorizationUrl().'">Login with Discord</a>';
+        header("Location: ".$provider->getAuthorizationUrl());
+        //echo '<a href="'.$provider->getAuthorizationUrl().'">Login with Discord</a>';
     } else {
         $token = $provider->getAccessToken('authorization_code', [
             'code' => $_GET['code'],

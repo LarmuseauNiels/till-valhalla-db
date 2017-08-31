@@ -94,13 +94,116 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
+/*General*/
 body{
-    background: black url(../assets/Best-BG.png) no-repeat fixed top center;
+    color:#b3aa9d;
+    background: #070503 url("../assets/Best-BG.png") no-repeat fixed top;
+    background-size: cover;
+}
+#page-wrap {
+     padding-top: 185px;
+     margin: 20px auto auto;
+     width: 1060px;
+     background: url("../assets/lugu.png") no-repeat center top;
+    font-family: Tahoma, sans-serif;
+ }
+#mainpage {
+    width: 1060px;
+    background: url("../assets/ModuleBG.jpg") repeat center top;
+    border: 3px solid #131413;
+    border-radius: 5px;
+}
+.titlebar{
+    background-image: url(../assets/TopHeader.png)  ;
+}
+#title{
+    height: 41px;
+    width: 1060px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 0;
+
 
 }
+h1{
+    text-align: center;
+    position: relative;
+    z-index: 100;
+    color: #bababa;
+    font-size: 14px;
+    padding-top: 11px;
+    font-family: Tahoma, sans-serif;
+}
+
+p{
+    font-size: 12px;
+}
+
+
+/*title bar expansion*/
+.left, .right{
+    z-index: 10;
+    position: absolute;
+    width: 51%;
+    height: 100%;
+}
+.left{
+    left: 0;
+    background-position: left top;
+}
+.right{
+    right: -5px;
+    background-position: right top;
+}
+/*Navigation bar*/
 nav{
-    background-image: url(../assets/MenuBG2.png);
+    height: 46px;
+    width: 1060px;
+    position: relative;
+}
+.navbar{
+    background-image: url(../assets/MenuBG2.png)  ;
+}
+nav ul {
+    position: relative;
+    z-index: 100;
+    list-style-type: none;
+    width: 45%;
+    height: 46px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    font-size: 12px;
+    padding: 0;
+}
+nav li {
+    float: left;
+    margin-top: 7px;
+}
+nav li a {
+    display: block;
+    color: #c4a56f;
+    text-align: center;
+    padding: 7px 12px;
+    text-decoration: none;
+    width: 100%;
+    margin-left: 24px;
+}
+
+nav li a:hover {
+    color: #993300;
+}
+
+.button{
+    z-index: 50;
+    position: relative;
+    background-image: url(../assets/Button.png);
+    width: 40px;
+    height: 40px;
+    left: 16px;
+    top: -4px;
+    margin: 0;
+    float: left;
 }
 
 
