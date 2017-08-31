@@ -13,6 +13,27 @@ if(isset($userid))
     $user = $DBtools->getUserFromID($userid);// get active user
     $actie = isset($_GET["actie"]) ? $_GET["actie"] : "";
     Output::navigationbar();
+    $formprosessing = isset($_GET["form"]) ? $_GET["form"] : "";
+
+    switch ($formprosessing)
+    {
+        case "logout":
+            $authenticator->logoff();
+            header("Location: index.php");
+            break;
+        case "charedit":
+            Output::showtitle("Character edit");
+            Output::ShowCharacterEditor();
+            break;
+        case "charsearch":
+            Output::showtitle("Character browser");
+            break;
+        case "home":
+        default:
+            Output::showtitle("Home");
+            break;
+    }
+
     switch ($actie)
     {
         case "logout":
@@ -21,7 +42,7 @@ if(isset($userid))
             break;
         case "charedit":
             Output::showtitle("Character edit");
-
+            Output::ShowCharacterEditor();
             break;
         case "charsearch":
             Output::showtitle("Character browser");
@@ -29,9 +50,9 @@ if(isset($userid))
         case "home":
         default:
             Output::showtitle("Home");
-
         break;
     }
+    Output::PageEnd();
 
     $dbtools->closeDB();
 }
@@ -41,5 +62,4 @@ else
     header("Location: index.php");
 }
 
-require_once 'HTMLtail.php';
 

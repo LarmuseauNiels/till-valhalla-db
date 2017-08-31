@@ -139,6 +139,16 @@ p{
     font-size: 12px;
 }
 
+.smallform{
+    padding-top: 10px;
+    padding-right: 300px;
+    padding-left: 300px;
+    padding-bottom: 10px;
+}
+
+.smallformrow{
+    padding-bottom: 15px;
+}
 
 /*title bar expansion*/
 .left, .right{
@@ -152,7 +162,7 @@ p{
     background-position: left top;
 }
 .right{
-    right: -5px;
+    right: 0px;
     background-position: right top;
 }
 /*Navigation bar*/
