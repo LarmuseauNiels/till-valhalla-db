@@ -141,17 +141,13 @@ class DBtools
         {
             switch ($tabel)
             {
-                case "crafting": $sql = "INSERT INTO crafting(characterid,craftingbranch,tier)
-						VALUES(:characterid, :categoriser,:tier)";
+                case "crafting": $sql = "INSERT INTO `crafting`(`characterid`,`craftingbranch`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
                     break;
-                case "farming": $sql = "INSERT INTO farming(characterid,farmbranch,tier)
-						VALUES(:characterid, :categoriser,:tier)";
+                case "farming": $sql = "INSERT INTO `farming`(`characterid`,`farmbranch`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
                     break;
-                case "refining": $sql = "INSERT INTO refining(characterid,resource,tier)
-						VALUES(:characterid, :categoriser,:tier)";
+                case "refining": $sql = "INSERT INTO `refining`(`characterid`,`resource`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
                     break;
-                case "gathering": $sql = "INSERT INTO gathering(characterid,profession,tier)
-						VALUES(:characterid, :categoriser,:tier)";
+                case "gathering": $sql = "INSERT INTO `gathering`(`characterid`,`profession`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
                     break;
                 default: die("Invalid table name");
             }
@@ -172,8 +168,7 @@ class DBtools
     {
         try
         {
-            $sql = "INSERT INTO character (userid,charactername)
-						VALUES(:userid, :charactername)";
+            $sql = "INSERT INTO `character`(`userid`, `charactername`) VALUES (':userid',':charactername')";
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":userid", $userid);
             $stmt->bindParam(":charactername", $charactername);
@@ -189,10 +184,9 @@ class DBtools
     {
         try
         {
-            $sql = "SELECT * FROM character
-					WHERE userid = :userid";
+            $sql = 'SELECT * FROM `character` WHERE `userid` = \':userid\'';
             $stmt = $this->DBtools->prepare($sql);
-            $stmt->bindParam(":userid", $userid);
+            $stmt->bindParam(":userid", $userid, \PDO::PARAM_INT);
             $stmt->execute();
             $characters = $stmt->fetch(PDO::FETCH_OBJ);
         }
@@ -208,8 +202,7 @@ class DBtools
     {
         try
         {
-            $sql = "SELECT * FROM character
-					WHERE characterid = :characterid";
+            $sql = "SELECT * FROM `character` WHERE `characterid` = ':characterid' ";
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":characterid", $characterid);
             $stmt->execute();

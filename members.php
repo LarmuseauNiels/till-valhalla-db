@@ -14,23 +14,22 @@ if(isset($userid))
     $actie = isset($_GET["actie"]) ? $_GET["actie"] : "";
     Output::navigationbar();
     $formprosessing = isset($_GET["form"]) ? $_GET["form"] : "";
-
     switch ($formprosessing)
     {
-        case "logout":
-            $authenticator->logoff();
-            header("Location: index.php");
+        case "crafting":
+            foreach($_POST as $key=>$value)
+            {
+                echo "$key=$value";
+                //$DBtools->addToTabel("crafting",$characterid,$key,$value);
+            }
             break;
-        case "charedit":
-            Output::showtitle("Character edit");
-            Output::ShowCharacterEditor();
+        case "gathering":
+
             break;
-        case "charsearch":
-            Output::showtitle("Character browser");
-            break;
+        case "refining10":
         case "home":
         default:
-            Output::showtitle("Home");
+            
             break;
     }
 
@@ -42,6 +41,10 @@ if(isset($userid))
             break;
         case "charedit":
             Output::showtitle("Character edit");
+            $test = $DBtools->getUserCharacters($userid);
+            var_dump($test);
+            //$_SESSION["selectedcharackterid"] = $this->userid;
+            Output::characterChooser();
             Output::ShowCharacterEditor();
             break;
         case "charsearch":
