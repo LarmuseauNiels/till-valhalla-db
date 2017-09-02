@@ -26,7 +26,7 @@ if(isset($userid))
         case "createcharacter":
             if (isset($_POST["charactername"])) {$charactername = $_POST["charactername"];
                 $DBtools->createCharacter($userid,$charactername);
-
+                //preforme successmesage and transfer
             }
             break;
         case "":
@@ -42,14 +42,22 @@ if(isset($userid))
             $authenticator->logoff();
             header("Location: index.php");
             break;
+        case "charsel":
+            Output::showtitle("Character chooser");
+            echo $userid;
+            $characters = $DBtools->getUserCharacters($userid);
+            var_dump($characters);
+            //$_SESSION["selectedcharackterid"] = $this->userid;
+            Output::characterChooser($characters);
+            //Output::ShowCharacterEditor();
+            break;
         case "charedit":
             Output::showtitle("Character edit");
-            echo $userid;
-            $test = $DBtools->getUserCharacters($userid);
-            var_dump($test);
-            //$_SESSION["selectedcharackterid"] = $this->userid;
-            Output::characterChooser();
             Output::ShowCharacterEditor();
+            break;
+        case "charrem":
+            $DBtools->removeCharacter($_GET["charid"]);
+            header("Location: members.php?actie=charsel");
             break;
         case "charsearch":
             Output::showtitle("Character browser");

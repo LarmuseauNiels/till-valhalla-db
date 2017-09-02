@@ -26,7 +26,7 @@ class Output
                     <a href="?actie=charsearch">Person Search</a></li>
                 <li>
                     <div class="button"></div>
-                    <a href="?actie=charedit">Character Editor</a></li>
+                    <a href="?actie=charsel">Character Editor</a></li>
                 <li>
                     <div class="button"></div>
                     <a href="?actie=logout">Log Out</a></li>
@@ -36,16 +36,27 @@ class Output
         <?php
     }
 
-    public static function characterChooser()
+    public static function characterChooser($characters)
     {
         echo '<div id="characterchooserpage">';
         Output::characterCreateButton();
         echo'
-        <div class="row" style="padding: 10px; padding-left: 20px">
-            <div class="col-sm-4" style="background-color:#1e1e1e;">Character name</div>
+        <div class="charactertable">
+        <div class="row" >
+            <div class="col-sm-4"><p class="charactertablename">Character name</p></div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4"></div>
         </div>';
+        $arrlength = count($characters);
+        for ($x = 0; $x < $arrlength; $x++) {
+            echo'
+                <div class="row">
+                    <div class="col-sm-4"><p class="charactertablename">'.$characters[$x]->charactername.'</p></div>
+                    <div class="col-sm-4"><a href="?actie=charedit&charid='.$characters[$x]->characterid.'" class="btn" >Edit</a> </div>
+                    <div class="col-sm-4"><a href="?actie=charrem&charid='.$characters[$x]->characterid.'" class="btn" >Remove</a></div>
+                </div>';
+        }
+        echo '</div>';
         echo '</div>';
 
 
