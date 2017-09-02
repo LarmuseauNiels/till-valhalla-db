@@ -44,16 +44,12 @@ if(isset($userid))
             break;
         case "charsel":
             Output::showtitle("Character chooser");
-            echo $userid;
             $characters = $DBtools->getUserCharacters($userid);
-            var_dump($characters);
-            //$_SESSION["selectedcharackterid"] = $this->userid;
             Output::characterChooser($characters);
-            //Output::ShowCharacterEditor();
             break;
         case "charedit":
             Output::showtitle("Character edit");
-            Output::ShowCharacterEditor();
+            Output::ShowCharacterEditor($DBtools);
             break;
         case "charrem":
             $DBtools->removeCharacter($_GET["charid"]);

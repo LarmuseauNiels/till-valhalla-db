@@ -134,6 +134,35 @@ class DBtools
 
         return $result;
     }
+    public function getTierFromTabel($tabel,$characterid,$categoriser)
+    {
+        try
+        {
+            switch ($tabel)
+            {
+                case "crafting": $sql = "SELECT * FROM crafting WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                    break;
+                case "farming": $sql = "SELECT * FROM farming WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                    break;
+                case "refining": $sql = "SELECT * FROM refining WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                    break;
+                case "gathering": $sql = "SELECT * FROM gathering WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                    break;
+                default: die("Invalled tabelname");
+            }
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
+            $stmt->bindParam(":categoriser", $categoriser, \PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+        return $result;
+    }
+
 
     public function addToTabel($tabel,$characterid,$categoriser ,$tier)
     {
@@ -172,6 +201,20 @@ class DBtools
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":userid", $userid,\PDO::PARAM_INT);
             $stmt->bindParam(":charactername", $charactername,\PDO::PARAM_STR);
+            $stmt->execute();
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+    }
+    public function removeCharacter($characterid)
+    {
+        try
+        {
+            $sql = "DELETE FROM `character` WHERE `characterid` = :characterid";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":characterid", $characterid,\PDO::PARAM_INT);
             $stmt->execute();
         }
         catch (PDOException $e)

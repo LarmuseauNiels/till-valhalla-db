@@ -62,7 +62,7 @@ class Output
 
     }
 
-    public static function ShowCharacterEditor()
+    public static function ShowCharacterEditor($DBtools)
     {
         ?>
         <div class="tabbable boxed parentTabs">
@@ -206,10 +206,12 @@ class Output
 
     public static function createForm($formname, $values)
     {
+
         echo '<form action="" class="form-group smallform">';
         echo '<div class="row smallformrow"><div class="col-sm-8 formlabels1">Achievement </div><div class="col-sm-4 formtiers1">Tier</div></div>';
         $arrlength = count($values);
         for ($x = 0; $x < $arrlength; $x++) {
+
             Output::PlaceLabelAndTierSelect($values[$x], 0);
         }
         echo '</form>';
