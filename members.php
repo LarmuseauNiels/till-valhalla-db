@@ -23,10 +23,13 @@ if(isset($userid))
                 //$DBtools->addToTabel("crafting",$characterid,$key,$value);
             }
             break;
-        case "gathering":
+        case "createcharacter":
+            if (isset($_POST["charactername"])) {$charactername = $_POST["charactername"];
+                $DBtools->createCharacter($userid,$charactername);
 
+            }
             break;
-        case "refining10":
+        case "":
         case "home":
         default:
             
@@ -41,6 +44,7 @@ if(isset($userid))
             break;
         case "charedit":
             Output::showtitle("Character edit");
+            echo $userid;
             $test = $DBtools->getUserCharacters($userid);
             var_dump($test);
             //$_SESSION["selectedcharackterid"] = $this->userid;

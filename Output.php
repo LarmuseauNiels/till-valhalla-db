@@ -140,11 +140,11 @@ class Output
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Create new Character</h4>
                         </div>
-                        <form action="">
+                        <form action="members.php?actie=charedit&form=createcharacter" method="post">
                             <div class="form-group">
                                 <div class="modal-body">
                                     <label for="charactername">Name:</label>
-                                    <input type="text" class="form-control" id="charactername" required="required">
+                                    <input type="text" class="form-control" id="charactername" name="charactername" required="required">
                                 </div>
                                 <div class="modal-footer">
                                     <input type="submit" class="btn btn-primary" value="Create">

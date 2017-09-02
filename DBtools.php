@@ -46,7 +46,7 @@ class DBtools
             $sql = "SELECT * FROM members
 					WHERE userid = :userid";
             $stmt = $this->DBtools->prepare($sql);
-            $stmt->bindParam(":userid", $userid);
+            $stmt->bindParam(":userid", $userid, \PDO::PARAM_INT);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_OBJ);
         }
@@ -141,20 +141,20 @@ class DBtools
         {
             switch ($tabel)
             {
-                case "crafting": $sql = "INSERT INTO `crafting`(`characterid`,`craftingbranch`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
+                case "crafting": $sql = "INSERT INTO `crafting`(`characterid`,`craftingbranch`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "farming": $sql = "INSERT INTO `farming`(`characterid`,`farmbranch`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
+                case "farming": $sql = "INSERT INTO `farming`(`characterid`,`farmbranch`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "refining": $sql = "INSERT INTO `refining`(`characterid`,`resource`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
+                case "refining": $sql = "INSERT INTO `refining`(`characterid`,`resource`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "gathering": $sql = "INSERT INTO `gathering`(`characterid`,`profession`,`tier`) VALUES(':characterid', ':categoriser',':tier')";
+                case "gathering": $sql = "INSERT INTO `gathering`(`characterid`,`profession`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
                 default: die("Invalid table name");
             }
             $stmt = $this->DBtools->prepare($sql);
-            $stmt->bindParam(":characterid", $characterid);
-            $stmt->bindParam(":categoriser", $categoriser);
-            $stmt->bindParam(":tier", $tier);
+            $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
+            $stmt->bindParam(":categoriser", $categoriser, \PDO::PARAM_STR);
+            $stmt->bindParam(":tier", $tier, \PDO::PARAM_INT);
             $stmt = $this->DBtools->prepare($sql);
             $stmt->execute();
         }
@@ -168,10 +168,10 @@ class DBtools
     {
         try
         {
-            $sql = "INSERT INTO `character`(`userid`, `charactername`) VALUES (':userid',':charactername')";
+            $sql = "INSERT INTO `character`(`userid`, `charactername`) VALUES (:userid,:charactername)";
             $stmt = $this->DBtools->prepare($sql);
-            $stmt->bindParam(":userid", $userid);
-            $stmt->bindParam(":charactername", $charactername);
+            $stmt->bindParam(":userid", $userid,\PDO::PARAM_INT);
+            $stmt->bindParam(":charactername", $charactername,\PDO::PARAM_STR);
             $stmt->execute();
         }
         catch (PDOException $e)
@@ -184,11 +184,11 @@ class DBtools
     {
         try
         {
-            $sql = 'SELECT * FROM `character` WHERE `userid` = \':userid\'';
+            $sql = "SELECT * FROM `character` WHERE `userid` = :userid";
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":userid", $userid, \PDO::PARAM_INT);
             $stmt->execute();
-            $characters = $stmt->fetch(PDO::FETCH_OBJ);
+            $characters = $stmt->fetchAll(PDO::FETCH_OBJ);
         }
         catch (PDOException $e)
         {
@@ -202,9 +202,9 @@ class DBtools
     {
         try
         {
-            $sql = "SELECT * FROM `character` WHERE `characterid` = ':characterid' ";
+            $sql = "SELECT * FROM `character` WHERE `characterid` = :characterid ";
             $stmt = $this->DBtools->prepare($sql);
-            $stmt->bindParam(":characterid", $characterid);
+            $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
             $stmt->execute();
             $characters = $stmt->fetch(PDO::FETCH_OBJ);
         }
