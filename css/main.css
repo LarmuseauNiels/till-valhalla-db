@@ -95,37 +95,41 @@ textarea {
    Author's custom styles
    ========================================================================== */
 /*General*/
-body{
-    color:#b3aa9d;
+body {
+    color: #b3aa9d;
     background: #070503 url("../assets/Best-BG.png") no-repeat fixed top;
     background-size: cover;
 }
+
 #page-wrap {
-     padding-top: 185px;
-     margin: 20px auto auto;
-     width: 1060px;
-     background: url("../assets/lugu.png") no-repeat center top;
+    padding-top: 185px;
+    margin: 20px auto auto;
+    width: 1060px;
+    background: url("../assets/lugu.png") no-repeat center top;
     font-family: Tahoma, sans-serif;
- }
+}
+
 #mainpage {
     width: 1060px;
     background: url("../assets/ModuleBG.jpg") repeat center top;
     border: 3px solid #131413;
     border-radius: 5px;
 }
-.titlebar{
-    background-image: url(../assets/TopHeader.png)  ;
+
+.titlebar {
+    background-image: url(../assets/TopHeader.png);
 }
-#title{
+
+#title {
     height: 41px;
     width: 1060px;
     position: relative;
     margin-top: 10px;
     margin-bottom: 0;
 
-
 }
-h1{
+
+h1 {
     text-align: center;
     position: relative;
     z-index: 100;
@@ -135,34 +139,34 @@ h1{
     font-family: Tahoma, sans-serif;
 }
 
-p{
+p {
     font-size: 12px;
 }
 
-.smallform{
+.smallform {
     padding-top: 10px;
     padding-right: 300px;
     padding-left: 300px;
     padding-bottom: 10px;
 }
 
-.smallformrow{
+.smallformrow {
     padding-bottom: 15px;
 }
 
-.charactertable{
+.charactertable {
     margin: 15px;
     background-color: #1e1e1e;
 }
 
-.charactertable>.row{
+.charactertable > .row {
     border-bottom: solid 1px;
     margin-left: 5px;
     margin-right: 5px;
 
 }
 
-.charactertablename{
+.charactertablename {
     padding: 6px 12px;
     margin-bottom: 0;
     font-size: 14px;
@@ -170,30 +174,35 @@ p{
     line-height: 1.42857143;
 }
 
-    /*title bar expansion*/
-.left, .right{
+/*title bar expansion*/
+.left, .right {
     z-index: 10;
     position: absolute;
     width: 51%;
     height: 100%;
 }
-.left{
+
+.left {
     left: 0;
     background-position: left top;
 }
-.right{
+
+.right {
     right: 0px;
     background-position: right top;
 }
+
 /*Navigation bar*/
-nav{
+nav {
     height: 46px;
     width: 1060px;
     position: relative;
 }
-.navbar{
-    background-image: url(../assets/MenuBG2.png)  ;
+
+.navbar {
+    background-image: url(../assets/MenuBG2.png);
 }
+
 nav ul {
     position: relative;
     z-index: 100;
@@ -206,10 +215,12 @@ nav ul {
     font-size: 12px;
     padding: 0;
 }
+
 nav li {
     float: left;
     margin-top: 7px;
 }
+
 nav li a {
     display: block;
     color: #c4a56f;
@@ -224,7 +235,7 @@ nav li a:hover {
     color: #993300;
 }
 
-.button{
+.button {
     z-index: 50;
     position: relative;
     background-image: url(../assets/Button.png);
@@ -235,15 +246,6 @@ nav li a:hover {
     margin: 0;
     float: left;
 }
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Helper classes
@@ -330,9 +332,9 @@ nav li a:hover {
 }
 
 @media print,
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 1.25dppx),
-       (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 
@@ -349,8 +351,9 @@ nav li a:hover {
     *:first-letter,
     *:first-line {
         background: transparent !important;
-        color: #000 !important; /* Black prints faster:
-                                   http://www.sanbeiji.com/archives/953 */
+        color: #000 !important;
+        /* Black prints faster:
+                                          http://www.sanbeiji.com/archives/953 */
         box-shadow: none !important;
         text-shadow: none !important;
     }
@@ -372,7 +375,6 @@ nav li a:hover {
      * Don't show links that are fragment identifiers,
      * or use the `javascript:` pseudo protocol
      */
-
     a[href^="#"]:after,
     a[href^="javascript:"]:after {
         content: "";
@@ -388,7 +390,6 @@ nav li a:hover {
      * Printing Tables:
      * http://css-discuss.incutio.com/wiki/Printing_Tables
      */
-
     thead {
         display: table-header-group;
     }

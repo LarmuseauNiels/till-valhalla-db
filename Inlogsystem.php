@@ -1,4 +1,5 @@
 <?php
+
 class Inlogsystem
 {
     private $userid;
@@ -24,14 +25,11 @@ class Inlogsystem
     {
         $DBtools = DBtools::getdbinstance();
         $this->userid = $user->id;
-        if ($DBtools->doesUserExist($this->userid))
-        {
-            $DBtools->updateUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
+        if ($DBtools->doesUserExist($this->userid)) {
+            $DBtools->updateUser($user->id, $user->username, $user->discriminator, date('Y-m-d H:i:s'));
             $_SESSION["userid"] = $this->userid;
-        }
-        else
-        {
-            $DBtools->addUser($user->id,$user->username,$user->discriminator,date('Y-m-d H:i:s'));
+        } else {
+            $DBtools->addUser($user->id, $user->username, $user->discriminator, date('Y-m-d H:i:s'));
             $_SESSION["userid"] = $this->userid;
         }
     }

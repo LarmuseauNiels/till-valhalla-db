@@ -36,10 +36,7 @@ if (isset($userid)) {
                 header("Location: members.php?actie=charsel");
             }
             break;
-        case "":
-        case "home":
         default:
-
             break;
     }
 
@@ -67,6 +64,8 @@ if (isset($userid)) {
             break;
         case "charsearch":
             Output::showtitle("Character browser");
+
+
             break;
         case "home":
         default:
@@ -74,8 +73,7 @@ if (isset($userid)) {
             break;
     }
     Output::PageEnd();
-
-    $dbtools->closeDB();
+    $DBtools->closeDB();
 } else {
     //not authenticated
     header("Location: index.php");
