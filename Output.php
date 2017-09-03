@@ -164,7 +164,6 @@ class Output
         </div>
         <?php
     }
-
     /*
   _    _        _
  | |  | |      | |

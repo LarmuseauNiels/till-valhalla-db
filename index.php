@@ -6,11 +6,12 @@ require __DIR__ . '/vendor/autoload.php';
 
 $authenticator = new Inlogsystem();
 $userid = $authenticator->getUserid();
+$configs = include('config.php');
 
 $provider = new \Discord\OAuth\Discord([
-    'clientId'     => '352090158444838914',
-    'clientSecret' => 'UyEUf7Ny2nC7D4Qcpl_6hxf8Fry7vKQq',
-    'redirectUri'  => 'http://tillvalhalla.tl-clan.com/',
+    'clientId'     => $configs[clientId],
+    'clientSecret' => $configs[clientSecret],
+    'redirectUri'  => $configs[redirectUri],
 ]);
 
 if(!isset($userid))

@@ -1,21 +1,15 @@
 <?php
-
 class DBtools
 {
     private static $dbinstance = null;
     private $DBtools;
-
     private function __construct()
     {
         try {
-            $server = "larmuseakzniels.mysql.db";
-            $database = "larmuseakzniels";
-            $username = "larmuseakzniels";
-            $password = "937yhGnuO3hf";
-
-            $this->DBtools = new PDO("mysql:host=$server; dbname=$database; charset=utf8mb4",
-                $username,
-                $password,
+            $configs = include('config.php');
+            $this->DBtools = new PDO("mysql:host=$configs[server]; dbname=$configs[database]; charset=utf8mb4",
+                $configs[username],
+                $configs[password],
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         } catch (PDOException $e) {
             die($e->getMessage());
