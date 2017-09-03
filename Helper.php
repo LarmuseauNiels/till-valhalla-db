@@ -8,4 +8,5 @@ class Helper
         $data = htmlentities($data, ENT_QUOTES);
         return $data;
     }
+
 }

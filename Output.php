@@ -62,8 +62,9 @@ class Output
 
     }
 
-    public static function ShowCharacterEditor($DBtools)
+    public static function ShowCharacterEditor()
     {
+        echo '<form action="members.php?actie=charsel&form=charedit&charid='.$_GET["charid"].'" method="post" class="form-group">';
         ?>
         <div class="tabbable boxed parentTabs">
         <ul class="nav nav-pills nav-justified">
@@ -88,30 +89,30 @@ class Output
                     "Offhand" => array("Tome_Crafter", "Shield_Crafter", "Torch_Crafter"),
                     "Shoes" => array("Cloth_Sandals", "Leather_Shoes", "Plate_Boots")
                 );
-                self::createFormofForms($craftingtypes);
+                self::createFormofForms($craftingtypes,"crafting");
                 ?>
             </div>
             <div id="gathering" class="tab-pane fade">
                 <?php
                 $gatheringtypes = array("Fiber", "Hide", "Ore", "Rock", "Wood");
-                self::createForm("gatheringform", $gatheringtypes);
+                self::createForm("gatheringform", $gatheringtypes,"gathering");
                 ?>
             </div>
             <div id="refining" class="tab-pane fade">
                 <?php
                 $gatheringtypes = array("Cloth", "Leather", "Metal_Bar", "Planks", "Stone_Block");
-                self::createForm("refiningform", $gatheringtypes);
+                self::createForm("refiningform", $gatheringtypes,"refining");
                 ?>
             </div>
             <div id="farming" class="tab-pane fade">
                 <?php
                 $gatheringtypes = array("Alchemist", "Animal_Breeder", "Chef", "Crop_Farmer", "Herbalist");
-                self::createForm("showfarmingform", $gatheringtypes);
+                self::createForm("farmingform", $gatheringtypes,"farming");
                 ?>
             </div>
             <div id="equip" class="tab-pane fade">
                 <?php
-                $craftingtypes = array(
+                $fightingequip = array(
                     "Melee_" => array("Axe_Fighter", "Dagger_Fighter", "Hammer_Fighter", "Mace_Fighter", "Quarterstaff_Fighter", "Spear_Fighter", "Sword_Fighter"),
                     "Ranged_" => array("Bow_Fighter", "Crossbow_Fighter"),
                     "Magic_" => array("Arcanist", "Warlock", "Pyromancer", "Frost_Mage", "Priest", "Nature_Staff_Fighter"),
@@ -120,12 +121,14 @@ class Output
                     "Offhand_" => array("Tome_Fighter", "Shield_Fighter", "Torch_Fighter"),
                     "Shoes_" => array("Cloth_Sandals_Fighter", "Leather_Shoes_Fighter", "Plate_Boots_Fighter")
                 );
-                self::createFormofForms($craftingtypes);
+                self::createFormofForms($fightingequip,"combat");
                 ?>
             </div>
         </div>
         </div>
         <?php
+        echo '<input type="submit" value="Submit" class="form-control" >
+</form>';
     }
 
     /*
@@ -179,7 +182,7 @@ class Output
                   | |
                   |_|
     */
-    public static function createFormofForms($values2d)
+    public static function createFormofForms($values2d,$tablename)
     {
         echo '<div class="tabbable"><ul class="nav nav-tabs nav-justified">';
         foreach ($values2d as $x => $x_value) {
@@ -198,31 +201,33 @@ class Output
             } else {
                 echo '<div id="' . $x . '" class="tab-pane fade">';
             }
-            self::createForm($x, $x_value);
+            self::createForm($x, $x_value,$tablename);
             echo '</div>';
         }
         echo '</div></div>';
     }
 
-    public static function createForm($formname, $values)
+    public static function createForm($formname, $values,$tablename)
     {
-
-        echo '<form action="" class="form-group smallform">';
+        echo '<div class="smallform">';
         echo '<div class="row smallformrow"><div class="col-sm-8 formlabels1">Achievement </div><div class="col-sm-4 formtiers1">Tier</div></div>';
         $arrlength = count($values);
+        $DBtools = DBtools::getdbinstance();
         for ($x = 0; $x < $arrlength; $x++) {
-
-            Output::PlaceLabelAndTierSelect($values[$x], 0);
+            $selected = $DBtools->getTierFromTabel($tablename,$_GET["charid"], $values[$x]);
+            $selectedtier = $selected[0]->tier;
+            if (empty($selectedtier)){$selectedtier = 0;}
+            Output::PlaceLabelAndTierSelect($values[$x], $selectedtier,$tablename);
         }
-        echo '</form>';
+        echo '</div>';
     }
 
-    public static function PlaceLabelAndTierSelect($labelname, $selected)
+    public static function PlaceLabelAndTierSelect($labelname, $selected,$tablename)
     {
         echo '<div class="row smallformrow"><div class="col-sm-8 formlabels1">';
         Output::PlaceLabelFor($labelname);
         echo '</div><div class="col-sm-4 formtiers1">';
-        Output::PlaceTierSelection($labelname, $selected);
+        Output::PlaceTierSelection($labelname, $selected,$tablename);
         echo '</div></div>';
 
     }
@@ -232,11 +237,11 @@ class Output
         echo "<label for='" . $labelname . "'>" . str_replace('_', ' ', $labelname) . "</label>";
     }
 
-    public static function PlaceTierSelection($name, $selected)
+    public static function PlaceTierSelection($name, $selected,$tablename)
     {
         echo '
-        <select class="form-control" id="' . $name . '" name="' . $name . '">
-			<option value="">-- Select Tier --</option>
+        <select class="form-control" id="' . $name . '" name="' . $tablename.'*'. $name . '">
+			<option value="0">-- Select Tier --</option>
         ';
         for ($i = 3; $i < 9; $i++) {
             echo '<option value="' . $i . '"';

@@ -6,38 +6,44 @@ require_once 'General.php';
 $authenticator = new Inlogsystem();
 $userid = $authenticator->getUserid();
 
-if(isset($userid))
-{
+if (isset($userid)) {
     //authenticated
     $DBtools = DBtools::getdbinstance();
     $user = $DBtools->getUserFromID($userid);// get active user
     $actie = isset($_GET["actie"]) ? $_GET["actie"] : "";
     Output::navigationbar();
     $formprosessing = isset($_GET["form"]) ? $_GET["form"] : "";
-    switch ($formprosessing)
-    {
-        case "crafting":
-            foreach($_POST as $key=>$value)
-            {
-                echo "$key=$value";
-                //$DBtools->addToTabel("crafting",$characterid,$key,$value);
+    switch ($formprosessing) {
+        case "charedit":
+            foreach ($_POST as $key => $value) {
+                if ($DBtools->checkcharid($_GET["charid"], $userid)) {
+                    if ($value > 0) {
+                        $tabletoinsertinto = substr($key, 0, strpos($key, "*"));
+                        $categoriser = substr($key, strpos($key, "*") + 1);
+                        if ($DBtools->doesTableIntryExist($tabletoinsertinto, $_GET["charid"], $categoriser)) {
+                            $DBtools->updateToTabel($tabletoinsertinto, $_GET["charid"], $categoriser, $value);
+                        } else {
+                            $DBtools->addToTabel($tabletoinsertinto, $_GET["charid"], $categoriser, $value);
+                        }
+                    }
+                }
             }
             break;
         case "createcharacter":
-            if (isset($_POST["charactername"])) {$charactername = $_POST["charactername"];
-                $DBtools->createCharacter($userid,$charactername);
-                //preforme successmesage and transfer
+            if (isset($_POST["charactername"])) {
+                $charactername = $_POST["charactername"];
+                $DBtools->createCharacter($userid, $charactername);
+                header("Location: members.php?actie=charsel");
             }
             break;
         case "":
         case "home":
         default:
-            
+
             break;
     }
 
-    switch ($actie)
-    {
+    switch ($actie) {
         case "logout":
             $authenticator->logoff();
             header("Location: index.php");
@@ -48,12 +54,16 @@ if(isset($userid))
             Output::characterChooser($characters);
             break;
         case "charedit":
-            Output::showtitle("Character edit");
-            Output::ShowCharacterEditor($DBtools);
+            if ($DBtools->checkcharid($_GET["charid"], $userid)) {
+                Output::showtitle("Character edit");
+                Output::ShowCharacterEditor($DBtools);
+            }
             break;
         case "charrem":
-            $DBtools->removeCharacter($_GET["charid"]);
-            header("Location: members.php?actie=charsel");
+            if ($DBtools->checkcharid($_GET["charid"], $userid)) {
+                $DBtools->removeCharacter($_GET["charid"]);
+                header("Location: members.php?actie=charsel");
+            }
             break;
         case "charsearch":
             Output::showtitle("Character browser");
@@ -61,14 +71,12 @@ if(isset($userid))
         case "home":
         default:
             Output::showtitle("Home");
-        break;
+            break;
     }
     Output::PageEnd();
 
     $dbtools->closeDB();
-}
-else
-{
+} else {
     //not authenticated
     header("Location: index.php");
 }

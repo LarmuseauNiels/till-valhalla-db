@@ -64,6 +64,17 @@ class DBtools
         return (!empty($user) ? true : false);
     }
 
+    public function checkcharid($charid,$userid)
+    {
+        $characters = $this->getUserCharacters($userid);
+        $arrlength = count($characters);
+        $result = false;
+        for ($x = 0; $x < $arrlength; $x++) {
+            if ($characters[$x]->characterid == $charid){$result = true;}
+        }
+        return $result;
+    }
+
     public function addUser($userid,$username,$discriminator,$lastlogin)
     {
         try
@@ -120,7 +131,7 @@ class DBtools
                 case "gathering": $sql = "SELECT * FROM gathering";
                     break;
 
-                default: die("Invalled tabelname");
+                default: die("Invalled tabelname 2001");
             }
 
             $stmt = $this->DBtools->prepare($sql);
@@ -140,15 +151,17 @@ class DBtools
         {
             switch ($tabel)
             {
-                case "crafting": $sql = "SELECT * FROM crafting WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                case "crafting": $sql = "SELECT * FROM `crafting` WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
                     break;
-                case "farming": $sql = "SELECT * FROM farming WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                case "farming": $sql = "SELECT * FROM `farming` WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
                     break;
-                case "refining": $sql = "SELECT * FROM refining WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                case "refining": $sql = "SELECT * FROM `refining` WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
                     break;
-                case "gathering": $sql = "SELECT * FROM gathering WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                case "gathering": $sql = "SELECT * FROM `gathering` WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
                     break;
-                default: die("Invalled tabelname");
+                case "combat": $sql = "SELECT * FROM `combat` WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                    break;
+                default: die("Invalled tabelname 2002");
             }
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
@@ -170,27 +183,65 @@ class DBtools
         {
             switch ($tabel)
             {
-                case "crafting": $sql = "INSERT INTO `crafting`(`characterid`,`craftingbranch`,`tier`) VALUES(:characterid, :categoriser,:tier)";
+                case "crafting": $sql = "INSERT INTO `crafting`(`characterid`,`categoriser`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "farming": $sql = "INSERT INTO `farming`(`characterid`,`farmbranch`,`tier`) VALUES(:characterid, :categoriser,:tier)";
+                case "farming": $sql = "INSERT INTO `farming`(`characterid`,`categoriser`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "refining": $sql = "INSERT INTO `refining`(`characterid`,`resource`,`tier`) VALUES(:characterid, :categoriser,:tier)";
+                case "refining": $sql = "INSERT INTO `refining`(`characterid`,`categoriser`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                case "gathering": $sql = "INSERT INTO `gathering`(`characterid`,`profession`,`tier`) VALUES(:characterid, :categoriser,:tier)";
+                case "gathering": $sql = "INSERT INTO `gathering`(`characterid`,`categoriser`,`tier`) VALUES(:characterid, :categoriser,:tier)";
                     break;
-                default: die("Invalid table name");
+                case "combat": $sql = "INSERT INTO `combat`(`characterid`,`categoriser`,`tier`) VALUES(:characterid, :categoriser,:tier)";
+                    break;
+                default: die("Invalid table name 2003");
             }
             $stmt = $this->DBtools->prepare($sql);
             $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
             $stmt->bindParam(":categoriser", $categoriser, \PDO::PARAM_STR);
             $stmt->bindParam(":tier", $tier, \PDO::PARAM_INT);
-            $stmt = $this->DBtools->prepare($sql);
             $stmt->execute();
         }
         catch (PDOException $e)
         {
             die($e->getMessage());
         }
+    }
+
+    public function updateToTabel($tabel,$characterid,$categoriser ,$tier)
+    {
+            try
+            {
+                switch ($tabel)
+                {
+                    case "crafting": $sql = "UPDATE `crafting` SET `tier` = :tier WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                        break;
+                    case "farming": $sql = "UPDATE `farming` SET `tier` = :tier WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                        break;
+                    case "refining": $sql = "UPDATE `refining` SET `tier` = :tier WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                        break;
+                    case "gathering": $sql = "UPDATE `gathering` SET `tier` = :tier WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                        break;
+                    case "combat": $sql = "UPDATE `combat` SET `tier` = :tier WHERE `characterid` = :characterid AND `categoriser` = :categoriser";
+                        break;
+                    default: die("Invalid table name 2004");
+                }
+                $stmt = $this->DBtools->prepare($sql);
+                $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
+                $stmt->bindParam(":categoriser", $categoriser, \PDO::PARAM_STR);
+                $stmt->bindParam(":tier", $tier, \PDO::PARAM_INT);
+                $stmt->execute();
+            }
+            catch (PDOException $e)
+            {
+                die($e->getMessage());
+            }
+    }
+
+
+    public function doesTableIntryExist($tabel,$characterid,$categoriser)
+    {
+        $tier = $this->getTierFromTabel($tabel,$characterid,$categoriser);
+        return (!empty($tier) ? true : false);
     }
 
     public function createCharacter($userid ,$charactername)
@@ -259,4 +310,3 @@ class DBtools
     }
 
 }
-
