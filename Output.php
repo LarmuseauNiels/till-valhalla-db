@@ -232,7 +232,7 @@ class Output
             echo '<div class="row smallformrow"><div class="col-sm-8 formlabels1">';
             Output::PlaceLabelFor($values[$x]);
             echo '</div><div class="col-sm-4 formtiers1">';
-            echo '<input type="number" class="form-control" id="' . $name . '" name="' . $tablename . '*' . $name . '" value="'.$selectedtier.'" >';
+            echo '<input type="number" class="form-control" id="' . $values[$x] . '" name="' . $tablename . '*' . $values[$x] . '" value="'.$selectedtier.'" >';
             echo '</div></div>';
         }
         echo '</div>';
