@@ -64,8 +64,8 @@ if (isset($userid)) {
             break;
         case "charsearch":
             Output::showtitle("Character browser");
-
-
+            $characters = $DBtools->getTabel("crafting");
+            Output::tabledisplayer($characters);
             break;
         case "home":
         default:

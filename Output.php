@@ -54,6 +54,20 @@ class Output
         echo '</div>';
     }
 
+    public static function tabledisplayer($Objectarray)
+    {
+        $arrlength = count($Objectarray);
+        $collumsize = 4;
+        for ($i = 0; $i < $arrlength; $i++) {
+            echo '<div class="row">';
+            foreach ($Objectarray[$i] as $x => $x_value) {
+                echo '<div class="col-sm-'.$collumsize.'"><p>'.$x_value.'</p></div>';
+            }
+            echo '</div>';
+        }
+
+    }
+
     public static function ShowCharacterEditor()
     {
         echo '<form action="members.php?actie=charsel&form=charedit&charid=' . $_GET["charid"] . '" method="post" class="form-group">';
@@ -120,7 +134,7 @@ class Output
         </div>
         <?php
         echo '<input type="submit" value="Submit" class="form-control" >
-</form>';
+        </form>';
     }
 
     /*
