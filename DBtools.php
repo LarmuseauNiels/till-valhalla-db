@@ -47,6 +47,19 @@ class DBtools
         return $user;
     }
 
+    public function getMembers()
+    {
+        try {
+            $sql = "SELECT * FROM members";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        return $result;
+    }
+
 
     public function doesUserExist($userid)
     {
@@ -118,7 +131,9 @@ class DBtools
                 case "gathering":
                     $sql = "SELECT * FROM gathering";
                     break;
-
+                case "combat":
+                    $sql = "SELECT * FROM combat";
+                    break;
                 default:
                     die("Invalled tabelname 2001");
             }
@@ -289,25 +304,5 @@ class DBtools
             die($e->getMessage());
         }
         return $characters;
-    }
-
-
-    public function stattabledisplayer($table)
-    {
-        $Objectarray = $this->getTabel($table);
-        $arrlength = count($Objectarray);
-        $collumsize = 3;
-        for ($i = 0; $i < $arrlength; $i++) {
-            echo '<div class="row">';
-            foreach ($Objectarray[$i] as $x => $x_value) {
-                if ($x == "characterid") {
-                    $a = $this->getUserFromCharacters($x_value);
-                    $x_value = $a->charactername;
-                }
-                echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';
-            }
-            echo '</div>';
-        }
-
     }
 }

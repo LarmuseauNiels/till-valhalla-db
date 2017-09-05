@@ -15,34 +15,50 @@ if (isset($userid)) {
 
     switch ($actie) {
         case "user":
-            $authenticator->logoff();
-            header("Location: index.php");
+            Output::showtitle("database browser");
+
             break;
         case "character":
-            Output::showtitle("Character chooser");
+            Output::showtitle("database browser");
             $characters = $DBtools->getUserCharacters($userid);
             Output::characterChooser($characters);
             break;
-        case "stats":
-            if ($DBtools->checkcharid($_GET["charid"], $userid)) {
-                Output::showtitle("Character edit");
-                Output::ShowCharacterEditor($DBtools);
+        case "members":
+            Output::showtitle("database browser");
+            $Objectarray = $DBtools->getMembers();
+            var_dump($Objectarray);
+            $arrlength = count($Objectarray);
+            $collumsize = 3;
+            for ($i = 0; $i < $arrlength; $i++) {
+                echo '<div class="row">';
+                foreach ($Objectarray[$i] as $x => $x_value) {
+                    echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';
+                }
+                echo '</div>';
             }
             break;
-        case "charrem":
-            if ($DBtools->checkcharid($_GET["charid"], $userid)) {
-                removeCharacter($_GET["charid"]);
-                header("Location: members.php?actie=charsel");
+        case "stat":
+            Output::showtitle("database browser");
+            $tablename = isset($_GET["tablename"]) ? $_GET["tablename"] : "crafting";
+            $Objectarray = $DBtools->getTabel($tablename);
+            $arrlength = count($Objectarray);
+            $collumsize = 3;
+            for ($i = 0; $i < $arrlength; $i++) {
+                echo '<div class="row">';
+                foreach ($Objectarray[$i] as $x => $x_value) {
+                    if ($x == "characterid") {
+                        $a = $DBtools->getUserFromCharacters($x_value);
+                        $b = $DBtools->getUserFromID($a->userid);
+                        echo '<div class="col-sm-' . $collumsize . '"><p>' . $b->username . '</p></div>';
+                        echo '<div class="col-sm-' . $collumsize . '"><p>' . $a->charactername . '</p></div>';
+                    }
+                    else {echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
+                }
+                echo '</div>';
             }
             break;
-        case "charsearch":
-            Output::showtitle("Character browser");
-
-            $DBtools->stattabledisplayer("crafting");
-            break;
-        case "home":
         default:
-            Output::showtitle("Home");
+        header("Location: member.php");
             break;
     }
     Output::PageEnd();
