@@ -12,45 +12,18 @@ if (isset($userid)) {
     $user = $DBtools->getUserFromID($userid);// get active user
     $actie = isset($_GET["actie"]) ? $_GET["actie"] : "";
     Output::navigationbar();
-    $formprosessing = isset($_GET["form"]) ? $_GET["form"] : "";
-    switch ($formprosessing) {
-        case "charedit":
-            foreach ($_POST as $key => $value) {
-                if ($DBtools->checkcharid($_GET["charid"], $userid)) {
-                    if ($value > 0) {
-                        $tabletoinsertinto = substr($key, 0, strpos($key, "*"));
-                        $categoriser = substr($key, strpos($key, "*") + 1);
-                        if ($DBtools->doesTableIntryExist($tabletoinsertinto, $_GET["charid"], $categoriser)) {
-                            $DBtools->updateToTabel($tabletoinsertinto, $_GET["charid"], $categoriser, $value);
-                        } else {
-                            $DBtools->addToTabel($tabletoinsertinto, $_GET["charid"], $categoriser, $value);
-                        }
-                    }
-                }
-            }
-            break;
-        case "createcharacter":
-            if (isset($_POST["charactername"])) {
-                $charactername = $_POST["charactername"];
-                $DBtools->createCharacter($userid, $charactername);
-                header("Location: members.php?actie=charsel");
-            }
-            break;
-        default:
-            break;
-    }
 
     switch ($actie) {
-        case "logout":
+        case "user":
             $authenticator->logoff();
             header("Location: index.php");
             break;
-        case "charsel":
+        case "character":
             Output::showtitle("Character chooser");
             $characters = $DBtools->getUserCharacters($userid);
             Output::characterChooser($characters);
             break;
-        case "charedit":
+        case "stats":
             if ($DBtools->checkcharid($_GET["charid"], $userid)) {
                 Output::showtitle("Character edit");
                 Output::ShowCharacterEditor($DBtools);

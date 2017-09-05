@@ -54,19 +54,7 @@ class Output
         echo '</div>';
     }
 
-    public static function tabledisplayer($Objectarray)
-    {
-        $arrlength = count($Objectarray);
-        $collumsize = 4;
-        for ($i = 0; $i < $arrlength; $i++) {
-            echo '<div class="row">';
-            foreach ($Objectarray[$i] as $x => $x_value) {
-                echo '<div class="col-sm-'.$collumsize.'"><p>'.$x_value.'</p></div>';
-            }
-            echo '</div>';
-        }
 
-    }
 
     public static function ShowCharacterEditor()
     {

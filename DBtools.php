@@ -1,8 +1,10 @@
 <?php
+
 class DBtools
 {
     private static $dbinstance = null;
     private $DBtools;
+
     private function __construct()
     {
         try {
@@ -44,6 +46,7 @@ class DBtools
 
         return $user;
     }
+
 
     public function doesUserExist($userid)
     {
@@ -286,5 +289,25 @@ class DBtools
             die($e->getMessage());
         }
         return $characters;
+    }
+
+
+    public function stattabledisplayer($table)
+    {
+        $Objectarray = $this->getTabel($table);
+        $arrlength = count($Objectarray);
+        $collumsize = 3;
+        for ($i = 0; $i < $arrlength; $i++) {
+            echo '<div class="row">';
+            foreach ($Objectarray[$i] as $x => $x_value) {
+                if ($x == "characterid") {
+                    $a = $this->getUserFromCharacters($x_value);
+                    $x_value = $a->charactername;
+                }
+                echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';
+            }
+            echo '</div>';
+        }
+
     }
 }

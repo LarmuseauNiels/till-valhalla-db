@@ -8,10 +8,10 @@
 $action = isset($_GET["action"]) ? $_GET["action"] : "";
 switch ($action) {
     case "test":
-        $myObj->stat = "action oke";
+        $myObj->status = "succes";
         break;
     default:
-        $myObj->stat = "action not recognized";
+        $myObj->status = "ERR action not recognised";
         break;
 }
 $myJSON = json_encode($myObj);
