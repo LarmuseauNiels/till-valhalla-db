@@ -53,7 +53,7 @@ class DBtools
             $sql = "SELECT * FROM members";
             $stmt = $this->DBtools->prepare($sql);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             die($e->getMessage());
         }

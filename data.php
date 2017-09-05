@@ -26,9 +26,14 @@ if (isset($userid)) {
         case "members":
             Output::showtitle("database browser");
             $Objectarray = $DBtools->getMembers();
-            var_dump($Objectarray);
             $arrlength = count($Objectarray);
             $collumsize = 3;
+            echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>Discord ID</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>Username</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>discriminator</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>last login</p></div>
+            </div>';
             for ($i = 0; $i < $arrlength; $i++) {
                 echo '<div class="row">';
                 foreach ($Objectarray[$i] as $x => $x_value) {
@@ -43,6 +48,12 @@ if (isset($userid)) {
             $Objectarray = $DBtools->getTabel($tablename);
             $arrlength = count($Objectarray);
             $collumsize = 3;
+            echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>Username</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>Charactername</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>categoriser</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>tier</p></div>
+            </div>';
             for ($i = 0; $i < $arrlength; $i++) {
                 echo '<div class="row">';
                 foreach ($Objectarray[$i] as $x => $x_value) {
