@@ -192,6 +192,20 @@ p {
     background-position: right top;
 }
 
+.gridfor3 {
+    margin-left: 155px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.gridfor4 {
+    margin-left: 110px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
 /*Navigation bar*/
 nav {
     height: 46px;

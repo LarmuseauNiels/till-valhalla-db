@@ -15,16 +15,16 @@ class Output
             <div class="left navbar"></div>
             <div class="right navbar"></div>
             <ul>
-                <li><a href="?actie=home">Home</a></li>
+                <li><a href="members.php?actie=home">Home</a></li>
                 <li>
                     <div class="button"></div>
-                    <a href="?actie=charsearch">Person Search</a></li>
+                    <a href="members.php?actie=charsearch">Person Search</a></li>
                 <li>
                     <div class="button"></div>
-                    <a href="?actie=charsel">Character Editor</a></li>
+                    <a href="members.php?actie=charsel">Character Editor</a></li>
                 <li>
                     <div class="button"></div>
-                    <a href="?actie=logout">Log Out</a></li>
+                    <a href="members.php?actie=logout">Log Out</a></li>
             </ul>
         </nav>
         <?php
@@ -123,6 +123,24 @@ class Output
         <?php
         echo '<input type="submit" value="Submit" class="form-control" >
         </form>';
+    }
+
+    public static function showDataNavigation($active)
+    {
+        $a = array("", "", "", "", "", "","","");
+         $a[$active] = 'class="active"';
+
+
+        echo '
+        <ul class="nav nav-pills nav-justified">
+            <li '.$a[0].' ><a href="data.php?actie=members">Members</a></li>
+            <li '.$a[1].' ><a href="data.php?actie=stat&tablename=crafting">Crafters</a></li>
+            <li '.$a[2].' ><a href="data.php?actie=stat&tablename=gathering">Gatherers</a></li>
+            <li '.$a[3].' ><a href="data.php?actie=stat&tablename=refining">Refiners</a></li>
+            <li '.$a[4].' ><a href="data.php?actie=stat&tablename=farming">Farmers</a></li>
+            <li '.$a[5].' ><a href="data.php?actie=stat&tablename=combat">Player Equipment</a></li>
+        </ul>
+        ';
     }
 
     /*

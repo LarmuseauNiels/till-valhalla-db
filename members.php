@@ -63,8 +63,7 @@ if (isset($userid)) {
             }
             break;
         case "charsearch":
-            Output::showtitle("Character browser");
-
+            header("Location: data.php");
             break;
         case "home":
         default:
