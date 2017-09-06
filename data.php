@@ -14,7 +14,7 @@ if (isset($userid)) {
     Output::navigationbar();
 
     switch ($actie) {
-        case "user":
+        case "character":
             Output::showtitle("Character Page");
             $characterid = isset($_GET["characterid"]) ? $_GET["characterid"] : "";
             $character = $DBtools->getUserFromCharacters($characterid);
@@ -29,11 +29,26 @@ if (isset($userid)) {
             foreach ($character as $x => $x_value) {
                 echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
             echo '</div>';
+            echo '<div class="tabbable boxed parentTabs">
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="active"><a data-toggle="pill" href="#crafting">Crafting</a></li>
+                        <li><a data-toggle="pill" href="#gathering">Gathering</a></li>
+                        <li><a data-toggle="pill" href="#refining">Refining</a></li>
+                        <li><a data-toggle="pill" href="#farming">Farming</a></li>
+                        <li><a data-toggle="pill" href="#equip">Equip</a></li>
+                    </ul>
+                    <div class="tab-content">
+                    <div id="crafting" class="tab-pane fade in active">';
 
+            echo '</div><div id="gathering" class="tab-pane fade">';
+            echo '</div><div id="refining" class="tab-pane fade">';
+            echo '</div><div id="farming" class="tab-pane fade">';
+            echo '</div><div id="equip" class="tab-pane fade">';
+            echo '</div></div>';
             break;
         case "member":
             Output::showtitle("User page");
-            $memberid = isset($_GET["memberid"]) ? $_GET["memberid"] : "";
+            $memberid = isset($_GET["userid"]) ? $_GET["userid"] : "";
             $member = $DBtools->getUserFromID($memberid);
             $collumsize = 3;
             echo '<div class="row">
@@ -99,8 +114,8 @@ if (isset($userid)) {
                     if ($x == "characterid") {
                         $a = $DBtools->getUserFromCharacters($x_value);
                         $b = $DBtools->getUserFromID($a->userid);
-                        echo '<div class="col-sm-' . $collumsize . '"><p>' . $b->username . '</p></div>';
-                        echo '<div class="col-sm-' . $collumsize . '"><p>' . $a->charactername . '</p></div>';
+                        echo '<div class="col-sm-' . $collumsize . '"><a href="?actie=member&userid='.$b->userid.'">'.$b->username.'</a></div>';
+                        echo '<div class="col-sm-' . $collumsize . '"><a href="?actie=character&characterid='.$a->characterid.'">'.$a->charactername.'</a></div>';
                     }
                     else {echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
                 }
