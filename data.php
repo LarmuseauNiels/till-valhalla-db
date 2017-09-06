@@ -15,16 +15,55 @@ if (isset($userid)) {
 
     switch ($actie) {
         case "user":
-            Output::showtitle("database browser");
+            Output::showtitle("Character Page");
+            $characterid = isset($_GET["characterid"]) ? $_GET["characterid"] : "";
+            $character = $DBtools->getUserFromCharacters($characterid);
+            $collumsize = 4;
+            $arrlength = count($character);
+            echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>charactername</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>userid</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>characterid</p></div>
+            </div>';
+            echo '<div class="row">';
+            foreach ($character as $x => $x_value) {
+                echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
+            echo '</div>';
 
             break;
-        case "character":
-            Output::showtitle("database browser");
-            $characters = $DBtools->getUserCharacters($userid);
-            Output::characterChooser($characters);
+        case "member":
+            Output::showtitle("User page");
+            $memberid = isset($_GET["memberid"]) ? $_GET["memberid"] : "";
+            $member = $DBtools->getUserFromID($memberid);
+            $collumsize = 3;
+            echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>userid</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>Username</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>discriminator</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>last login</p></div>
+            </div>';
+            $arrlength = count($member);
+            echo '<div class="row">';
+            foreach ($member as $x => $x_value) {echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
+            echo '</div>';
+            $characters = $DBtools->getUserCharacters($memberid);
+            $collumsize = 4;
+            $arrlength = count($characters);
+            echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>charactername</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>userid</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>characterid</p></div>
+            </div>';
+            for ($i = 0; $i < $arrlength; $i++) {
+                echo '<div class="row">';
+                foreach ($characters[$i] as $x => $x_value) {
+                    echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';
+                }
+                echo '</div>';
+            }
             break;
         case "members":
-            Output::showtitle("database browser");
+            Output::showtitle("Members");
             $Objectarray = $DBtools->getMembers();
             $arrlength = count($Objectarray);
             $collumsize = 3;
