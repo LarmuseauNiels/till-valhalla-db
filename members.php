@@ -26,15 +26,19 @@ if (isset($userid)) {
                             $DBtools->addToTabel($tabletoinsertinto, $_GET["charid"], $categoriser, $value);
                         }
                     }
+                    else{Output::error('MFCENV');}
                 }
+                else{Output::error('MFCEF');}
             }
             break;
         case "createcharacter":
             if (isset($_POST["charactername"])) {
+                Output::error('MFCCT');
                 $charactername = $_POST["charactername"];
                 $DBtools->createCharacter($userid, $charactername);
                 header("Location: members.php?actie=charsel");
             }
+            else{Output::error('MFCCF');}
             break;
         default:
             break;
@@ -55,12 +59,15 @@ if (isset($userid)) {
                 Output::showtitle("Character edit");
                 Output::ShowCharacterEditor($DBtools);
             }
+            else{Output::error('MCEF');}
             break;
         case "charrem":
             if ($DBtools->checkcharid($_GET["charid"], $userid)) {
-                removeCharacter($_GET["charid"]);
+                Output::error('MCRT');
+                $DBtools->removeCharacter($_GET["charid"]);
                 header("Location: members.php?actie=charsel");
             }
+            else{Output::error('MCRF');}
             break;
         case "charsearch":
             header("Location: data.php");

@@ -1,6 +1,14 @@
 <?php
 class Output
 {
+
+    public static function error($code)
+    {
+        Output::showtitle("ERROR");
+        echo 'DEBUG CODE: '.$code;
+    }
+
+
     public static function showtitle($title)
     {
         echo "<div id='title'><div class='left titlebar'></div><div class='right titlebar'></div><h1>$title</h1></div>";
