@@ -1,8 +1,10 @@
 <?php
+
 class DBtools
 {
     private static $dbinstance = null;
     private $DBtools;
+
     private function __construct()
     {
         try {
@@ -44,6 +46,20 @@ class DBtools
 
         return $user;
     }
+
+    public function getMembers()
+    {
+        try {
+            $sql = "SELECT * FROM members";
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        return $result;
+    }
+
 
     public function doesUserExist($userid)
     {
@@ -115,7 +131,9 @@ class DBtools
                 case "gathering":
                     $sql = "SELECT * FROM gathering";
                     break;
-
+                case "combat":
+                    $sql = "SELECT * FROM combat";
+                    break;
                 default:
                     die("Invalled tabelname 2001");
             }
@@ -161,6 +179,60 @@ class DBtools
             die($e->getMessage());
         }
         return $result;
+    }
+
+    public function getCharactersTabel($tabel, $characterid)
+    {
+        try {
+            switch ($tabel) {
+                case "crafting":
+                    $sql = "SELECT * FROM `crafting` WHERE `characterid` = :characterid";
+                    break;
+                case "farming":
+                    $sql = "SELECT * FROM `farming` WHERE `characterid` = :characterid";
+                    break;
+                case "refining":
+                    $sql = "SELECT * FROM `refining` WHERE `characterid` = :characterid";
+                    break;
+                case "gathering":
+                    $sql = "SELECT * FROM `gathering` WHERE `characterid` = :characterid";
+                    break;
+                case "combat":
+                    $sql = "SELECT * FROM `combat` WHERE `characterid` = :characterid";
+                    break;
+                default:
+                    die("Invalled tabelname 2002");
+            }
+            $stmt = $this->DBtools->prepare($sql);
+            $stmt->bindParam(":characterid", $characterid, \PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        $arrlength = count($result);
+        $collumsize = 3;
+        echo '<div class="gridfor4">';
+        echo '<div class="row">
+            <div class="col-sm-'.$collumsize.'"><p>Username</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>Charactername</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>categoriser</p></div>
+            <div class="col-sm-'.$collumsize.'"><p>tier</p></div>
+            </div>';
+        for ($i = 0; $i < $arrlength; $i++) {
+            echo '<div class="row">';
+            foreach ($result[$i] as $x => $x_value) {
+                if ($x == "characterid") {
+                    $a = $this->getUserFromCharacters($x_value);
+                    $b = $this->getUserFromID($a->userid);
+                    echo '<div class="col-sm-' . $collumsize . '"><a href="?actie=member&userid='.$b->userid.'">'.$b->username.'</a></div>';
+                    echo '<div class="col-sm-' . $collumsize . '"><a href="?actie=character&characterid='.$a->characterid.'">'.$a->charactername.'</a></div>';
+                }
+                else {echo '<div class="col-sm-' . $collumsize . '"><p>' . $x_value . '</p></div>';}
+            }
+            echo '</div>';
+        }
+        echo '</div>';
     }
 
 

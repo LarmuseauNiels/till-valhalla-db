@@ -58,14 +58,12 @@ if (isset($userid)) {
             break;
         case "charrem":
             if ($DBtools->checkcharid($_GET["charid"], $userid)) {
-                $DBtools->removeCharacter($_GET["charid"]);
+                removeCharacter($_GET["charid"]);
                 header("Location: members.php?actie=charsel");
             }
             break;
         case "charsearch":
-            Output::showtitle("Character browser");
-            $characters = $DBtools->getTabel("crafting");
-            Output::tabledisplayer($characters);
+            header("Location: data.php");
             break;
         case "home":
         default:
